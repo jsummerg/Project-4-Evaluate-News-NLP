@@ -6,7 +6,7 @@ async function handleSubmit(e) {
     Client.checkForName(formText)
 
     console.log("::: Form Submitted :::")
-    // fetch('http://localhost:8081/post')
+    // fetch('http://localhost:8081/post') // TO-DO Remove template code
     // .then(res => res.json())
     // .then(function(res) {
     //     document.getElementById('results').innerHTML = res.message
@@ -16,7 +16,7 @@ async function handleSubmit(e) {
         // Send user input to post route which will call meaning cloud api
         const result = await postData('/post',{text: userInput})
 
-        //Update the UI
+        //Update the UI // TO-DO Fix
         document.getElementById('results').innerHTML = `<p style="font-family: fantasy; color: white;"> <span style="color: gold;"> Agreement:</span>   ${result.agreement}</p>
                                                         <p style="font-family: fantasy; color: white;"> <span style="color: gold;"> Confidence:</span>  ${result.confidence}</p>
                                                         <p style="font-family: fantasy; color: white;"> <span style="color: gold;">Score_tag:</span>   ${result.score_tag}</p>`
@@ -25,6 +25,7 @@ async function handleSubmit(e) {
     }
 }
 
+// Post function
 const postData = async (url = '', data= {}) => {
     const response = await fetch(url, {
         method: "POST",

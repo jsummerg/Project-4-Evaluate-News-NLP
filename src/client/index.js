@@ -13,5 +13,5 @@ export {
     handleSubmit
 }
 
-alert("I EXIST")
-console.log("CHANGE!!");
+alert("I EXIST") // TO-DO REMOVE
+console.log("CHANGE!!"); // TO-DO REMOVE
