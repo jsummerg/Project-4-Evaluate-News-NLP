@@ -1,7 +1,11 @@
+@import "variables";
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: $font-stack;
+    background: $base-color;
 }
 
 main {
