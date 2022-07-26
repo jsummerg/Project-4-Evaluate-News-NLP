@@ -1,29 +1,47 @@
+// API Call Variables
+const baseURL = "https://api.meaningcloud.com/sentiment-2.1?key="
+const apiKey = process.env.MC_API_KEY;
+
 async function handleSubmit(e) {
     e.preventDefault()
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value
     Client.checkForName(formText)
-
-    console.log("::: Form Submitted :::")
-    // fetch('http://localhost:8081/post') // TO-DO Remove template code
-    // .then(res => res.json())
-    // .then(function(res) {
-    //     document.getElementById('results').innerHTML = res.message
-    // })
-
-    try {
-        // Send user input to post route which will call meaning cloud api
-        const result = await postData('/post',{text: userInput})
-
-        //Update the UI // TO-DO Fix
-        document.getElementById('results').innerHTML = `<p style="font-family: fantasy; color: white;"> <span style="color: gold;"> Agreement:</span>   ${result.agreement}</p>
-                                                        <p style="font-family: fantasy; color: white;"> <span style="color: gold;"> Confidence:</span>  ${result.confidence}</p>
-                                                        <p style="font-family: fantasy; color: white;"> <span style="color: gold;">Score_tag:</span>   ${result.score_tag}</p>`
-    }catch(error){
-        console.log("error",error);
-    }
+    console.log("::: Form Submitted :::") // Verify submission
+    
+    getMeaningCloudData(baseURL, formText, apiKey) // Get weather info through API Call
+    .then(function(data){
+        postData('/add', {data}) // Send data to the server to be added to the database
+        updateUI() // Update UI to display the data
+    })
 }
+
+// Meaning Cloud API call
+const getMeaningCloudData = async (baseURL, formText, apiKey)=>{
+    const result = await fetch(`${baseURL}${apiKey}&txt=${formText}&lang=en`)
+    try {
+        const response = await result.json()
+        //Return API Call result
+        console.log(response)
+        return response
+    } catch(error) {
+        console.log("error", error)
+    }
+} 
+
+// Update UI
+const updateUI = async () => {
+    const request = await fetch('/data') // GET request from /data to access projectData object
+    try{ //Edit innerhtml to fill info from projectData
+        const projectData = await request.json()
+        document.getElementById('results').innerHTML = `<p>Agreement: ${projectData.agreement}</p>
+                                                        <p>Confidence: ${projectData.confidence}</p>
+                                                        <p>Score tag: ${projectData.score_tag}</p>`
+    } catch(error) {
+      console.log("error", error)
+    }
+  }
 
 // Post function
 const postData = async (url = '', data= {}) => {

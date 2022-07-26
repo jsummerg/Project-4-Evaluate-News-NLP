@@ -25,13 +25,23 @@ app.use(bodyParser.json())
 const cors = require('cors')
 app.use(cors());
 
+// Setup empty JS object to act as endpoint for all routes
+projectData = {};
+
 // Routes
 app.get('/', function (req, res) {
     res.sendFile('dist/index.html')
     // res.sendFile(path.resolve('src/client/views/index.html'))
 })
 
-// designates what port the app will listen to for incoming requests
+// Retrieve projectData
+app.get('/data', function (req, res) { // TO-DO Verify
+    console.log(projectData)
+    res.send(projectData)
+    console.log("data retreieved")
+})
+
+// Designates what port the app will listen to for incoming requests
 app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
@@ -40,28 +50,10 @@ app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
 
- // Post route for user input
- app.post("/post", async (req, res)=>{
-    try {
-        const userInput = await req.body.text
-        const data = await getMeaningCloudData(userInput) // Send user input data to api call function
-        res.send(data)
-    }catch(error){
-        console.log("error", error)
-    }
- })
-
-  // Meaning Cloud API call
-  const getMeaningCloudData = async (text)=>{
-    const baseUrl = "https://api.meaningcloud.com/sentiment-2.1?key="
-    const apiKey = process.env.API_KEY
-    const result = await fetch(`${baseUrl}${apiKey}&txt=${text}&lang=en`)
-    try {
-        const response = await result.json()
-        //Return the analysed result from meaningcloud service
-        console.log(response)
-        return response
-    } catch(error) {
-        console.log("error", error)
-    }
-} 
+app.post('/add', function (req, res) {
+    projectData["agreement"] = req.body.data.agreement,
+    projectData["confidence"] = req.body.data.confidence,
+    projectData["score_tag"] = req.body.data.score_tag
+    console.log(projectData)
+    res.send(projectData)
+  })
