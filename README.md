@@ -109,13 +109,17 @@ A great step to take with your finished project would be to deploy it! Unfortuna
 
 
 ## INSTALLATION
-For local server
+Step 1:
 ```
 npm install --legacy-peer-deps
+```
+Step 2: Pick server
+- For prod server
+```
 npm run build-dev-test
 npm run start
 ```
-For dynamic server
+ - For dev server:
 ```
 npm run build-dev
 ```
