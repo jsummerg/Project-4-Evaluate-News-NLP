@@ -35,9 +35,9 @@ const updateUI = async () => {
     const request = await fetch('/data') // GET request from /data to access projectData object
     try{ //Edit innerhtml to fill info from projectData
         const projectData = await request.json()
-        document.getElementById('results').innerHTML = `<p>Agreement: ${projectData.agreement}</p>
-                                                        <p>Confidence: ${projectData.confidence}</p>
-                                                        <p>Score tag: ${projectData.score_tag}</p>`
+        document.getElementById('results').innerHTML = `<p>Confidence: ${projectData.confidence}</p>
+                                                        <p>Agreement: ${projectData.agreement}</p>
+                                                        <p>Score Tag: ${projectData.score_tag}</p>`
     } catch(error) {
       console.log("error", error)
     }
