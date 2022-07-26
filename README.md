@@ -11,7 +11,9 @@ Step 1: run the following in the console
 ```
 npm install --legacy-peer-deps
 ```
-Step 2: Pick server
+Step 2: .env file
+ - Create a .env file based off .env.template and replace the ### with your own api key
+Step 3: Pick server
 - For production server
 ```
 npm run build-prod
@@ -26,7 +28,7 @@ npm run start
 ```
 npm run build-dev-live
 ```
-Step 3: To perform tests with jest
+Step 4: To perform tests with jest
 ```
 npm run test
 ```
