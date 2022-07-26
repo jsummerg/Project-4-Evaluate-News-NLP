@@ -12,6 +12,9 @@ module.exports = {
     output: {
         libraryTarget: 'var',
         library: 'Client'
+    },    
+    optimization: {
+        minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
     },
     mode: 'production',
     devtool: 'source-map',
@@ -29,9 +32,7 @@ module.exports = {
                 },
         ]
     },
-    optimization: {
-        minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
-        },
+
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/client/views/index.html",
