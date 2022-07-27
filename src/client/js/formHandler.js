@@ -9,12 +9,16 @@ async function handleSubmit(e) {
     let formText = document.getElementById('name').value
     Client.checkForName(formText)
     console.log("::: Form Submitted :::") // Verify submission
-    
-    getMeaningCloudData(baseURL, formText, apiKey) // Get weather info through API Call
-    .then(function(data){
-        postData('/add', {data}) // Send data to the server to be added to the database
-        updateUI() // Update UI to display the data
-    })
+    if (formText.length === 0) {
+        alert('Form is blank, please try again')
+        return false;
+    } else {
+        getMeaningCloudData(baseURL, formText, apiKey) // Get weather info through API Call
+        .then(function(data){
+            postData('/add', {data}) // Send data to the server to be added to the database
+            updateUI() // Update UI to display the data
+        })
+    }
 }
 
 // Meaning Cloud API call
@@ -23,7 +27,7 @@ const getMeaningCloudData = async (baseURL, formText, apiKey)=>{
     try {
         const response = await result.json()
         //Return API Call result
-        console.log(response)
+        // console.log(response)
         return response
     } catch(error) {
         console.log("error", error)
