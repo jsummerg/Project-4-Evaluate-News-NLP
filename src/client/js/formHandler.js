@@ -9,7 +9,7 @@ async function handleSubmit(e) {
     let formText = document.getElementById('name').value
     Client.checkForName(formText)
     console.log("::: Form Submitted :::") // Verify submission
-    if (formText.length === 0) {
+    if (checkForName === false) {
         alert('Form is blank, please try again')
         return false;
     } else {
