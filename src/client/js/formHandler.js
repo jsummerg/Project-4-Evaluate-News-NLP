@@ -7,12 +7,12 @@ async function handleSubmit(e) {
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value
-    Client.checkForName(formText)
-    console.log("::: Form Submitted :::") // Verify submission
-    if (checkForName === false) {
+     // Verify submission
+    if (Client.checkValid(formText) === false) {
         alert('Form is blank, please try again')
         return false;
     } else {
+        console.log("::: Form Submitted :::")
         getMeaningCloudData(baseURL, formText, apiKey) // Get weather info through API Call
         .then(function(data){
             postData('/add', {data}) // Send data to the server to be added to the database
